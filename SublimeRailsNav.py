@@ -23,9 +23,9 @@ class RailsMixin:
             dirs = settings.get(key)
         return dirs
 
-    def show_files(self, dirs, file_pattern='\.rb$'):
+    def show_files(self, dirs, file_pattern='\.rb$', exclusion=''):
         paths = self.construct_glob_paths(dirs)
-        self.find_files(paths, file_pattern)
+        self.find_files(paths, file_pattern, exclusion)
 
         view = self.window.active_view()
         if view:
@@ -84,10 +84,14 @@ class RailsMixin:
         if selected_index != -1:
             self.window.open_file(self.files[selected_index])
 
-    def find_files(self, paths, file_pattern):
-        self.files = []
+    def find_files(self, paths, file_pattern, exclusion):
+        all_files = []
         for path in paths:
-            self.files.extend(rglob(path, file_pattern))
+            all_files.extend(rglob(path, file_pattern))
+        if exclusion != '':
+            self.files = [item for item in all_files if exclusion not in item]
+        else:
+            self.files = all_files
 
     def remove_from_list(self, current_file):
         # First check to see if the current file is in the list. For instance,
@@ -347,7 +351,7 @@ class ListRailsJavascriptsCommand(RailsCommandBase):
         if not self.setup():
             return
         dirs = self.get_setting('javascript_locations')
-        self.show_files(dirs, '\.(?:js|coffee|erb)$')
+        self.show_files(dirs, '\.(?:js|coffee|erb)$', 'backbone')
 
     def is_listing_current_file_group(self, current_file):
         return 'javascripts' in current_file
@@ -362,3 +366,14 @@ class ListRailsStylesheetsCommand(RailsCommandBase):
 
     def is_listing_current_file_group(self, current_file):
         return 'stylesheets' in current_file
+
+
+class ListRailsBackboneCommand(RailsCommandBase):
+    def run(self):
+        if not self.setup():
+            return
+        dirs = self.get_setting('backbone_locations')
+        self.show_files(dirs, '\.(?:js|coffee|hamlc)$')
+
+    def is_listing_current_file_group(self, current_file):
+        return 'backbone' in current_file

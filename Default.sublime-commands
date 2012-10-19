@@ -28,6 +28,10 @@
         "command": "list_rails_javascripts"
     },
     {
+        "caption": "Simple Rails Navigator: List Backbone files",
+        "command": "list_rails_backbone"
+    },
+    {
         "caption": "Simple Rails Navigator: List stylesheets",
         "command": "list_rails_stylesheets"
     }

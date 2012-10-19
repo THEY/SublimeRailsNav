@@ -114,7 +114,8 @@ in the console, try out the key combinations and see if anything is logged.
     { "keys": ["super+ctrl+x"], "command": "list_rails_fixtures" },
     { "keys": ["super+ctrl+t"], "command": "list_rails_tests" },
     { "keys": ["super+ctrl+i"], "command": "list_rails_javascripts" },
-    { "keys": ["super+ctrl+y"], "command": "list_rails_stylesheets" }
+    { "keys": ["super+ctrl+y"], "command": "list_rails_stylesheets" },
+    { "keys": ["super+ctrl+k"], "command": "list_rails_backbone" }
 
 If you are using Vintage mode and want to use sequences of non-modifier keys,
 you can restrict the key bindings to command mode like this:
@@ -142,6 +143,10 @@ project file under a top-level "settings" key. An example of the latter:
       {
         "javascript_locations": [
           ["app", "assets", "javascripts"]
+        ],
+        "backbone_locations": [
+          ["app", "assets", "javascripts", "backbone"],
+          ["app", "assets", "javascripts", "templates"]
         ],
         "stylesheet_locations": [
           ["app", "assets", "stylesheets"],
